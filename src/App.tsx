@@ -3,6 +3,7 @@ import { useState } from "react";
 const App = () => {
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
+  const apiKey= import.meta.env.VITE_YOUR_API_KEY// Access environment variable
 
   // Function to get user geolocation
   const geoLocation = () => {
@@ -26,9 +27,7 @@ const App = () => {
     <>
       <div className="container mx-auto flex justify-center flex-col items-center">
         <div className="text-center mt-5">
-          <h1 className="font-semibold text-xl">
-            Get the User's Current Location
-          </h1>
+          <h1 className="font-semibold text-xl">Get the User's Current Location</h1>
         </div>
         <div>
           <button
@@ -44,16 +43,18 @@ const App = () => {
         </div>
 
         {/* Google Maps */}
-        {/* AIzaSyDgY1phfABljMlJNhMKpvTs3FPIBp1IFrQ */}
         <div className="mt-5">
-          <iframe
-            width="1200"
-            height="600"
-            style={{ border: 0 }}
-            src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyDgY1phfABljMlJNhMKpvTs3FPIBp1IFrQ
-            &q=${latitude},${longitude}`}
-            allowFullScreen
-          ></iframe>
+          {latitude && longitude ? (
+            <iframe
+              width="1200"
+              height="600"
+              style={{ border: 0 }}
+              src={`https://www.google.com/maps/embed/v1/place?key=${apiKey}&q=${latitude},${longitude}`}
+              allowFullScreen
+            ></iframe>
+          ) : (
+            <p>Please get the location first.</p>
+          )}
         </div>
       </div>
     </>
